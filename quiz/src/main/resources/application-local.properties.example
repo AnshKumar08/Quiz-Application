@@ -1,0 +1,9 @@
+# Local overrides — never commit this file
+# Copy this to application-local.properties and fill in your real values
+
+spring.datasource.url=jdbc:mysql://localhost:3306/quiz
+spring.datasource.username=root
+spring.datasource.password=YOUR_DB_PASSWORD
+
+# Generate with: openssl rand -base64 32
+jwt.secret=YOUR_BASE64_SECRET_KEY
