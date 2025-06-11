@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!--Landing Page-->
+    <section class="landing-page">
+      <div class="wrapper">
+        <div class="flex-content">
+          <h1 class="vacation-heading">Welcome To Master Quiz</h1>
+          <a href="#quiz-packages" class="btn">Start Now</a>
+        </div>
+      </div>
+    </section>
+
+    <!--header section-->
+    <header class="quiz-header" id="quiz-header">
+      <h1 class="heading">Master Quiz</h1>
+    </header>
+
+    <nav class="main-nav">
+      <a href="#">Home</a>
+      <a href="#quiz-packages">Quiz</a>
+    </nav>
+
+    <section class="quiz-packages-section" id="quiz-packages">
+      <h1 class="quiz-heading">Coding Quiz</h1>
+      <p class="quiz-text">
+        Sharpen your coding skills with interactive quizzes in Java, Python,
+        JavaScript, and .NET. Choose your language, test your knowledge, and
+        track your progress in real-time.
+      </p>
+      <div class="package-wrapper">
+        <div class="package-card">
+          <img src=".//images/java.jpg" alt="" />
+          <p class="card-heading">Java</p>
+          <p class="card-text">
+            Master the foundational concepts of Java programming, including OOP,
+            collections, exceptions, and multi-threading. Perfect for students
+            and developers preparing for interviews.
+          </p>
+          <button class="btn" onclick="startQuiz('java')">Take Quiz</button>
+        </div>
+        <div class="package-card">
+          <img src=".//images/python.jpg" alt="" />
+          <p class="card-heading">Python</p>
+          <p class="card-text">
+            Dive into Python fundamentals with questions on syntax, data
+            structures, functions, and libraries. Ideal for beginners and data
+            science enthusiasts.
+          </p>
+          <button class="btn">Take Quiz</button>
+        </div>
+        <div class="package-card">
+          <img src=".//images/js.png" alt="" />
+          <p class="card-heading">JavaScript</p>
+          <p class="card-text">
+            Test your JavaScript skills with quizzes on DOM manipulation, ES6+,
+            functions, and event handling. Great for aspiring web developers.
+          </p>
+          <button class="btn">Take Quiz</button>
+        </div>
+        <div class="package-card">
+          <img src=".//images/net.png" alt="" />
+          <p class="card-heading">.Net</p>
+          <p class="card-text">
+            Challenge yourself with quizzes covering .NET basics, C# syntax,
+            ASP.NET, and framework essentials. Best for backend and enterprise
+            app developers.
+          </p>
+          <button class="btn">Take Quiz</button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer-section">
+      <small>All Right Reserved <br /></small>
+      <small>Developed by Ansh Kumar </small>
+    </footer>
+
+    <script src="index.js"></script>
+  </body>
+</html>

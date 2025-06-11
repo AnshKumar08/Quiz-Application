@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Result</title>
+    <style>
+      /* Base Styling */
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      /* Result Card */
+      .result-container {
+        background: #ffffff;
+        padding: 30px 25px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        max-width: 350px;
+        width: 90%;
+      }
+
+      .result-container h1 {
+        font-size: 28px;
+        margin-bottom: 10px;
+        color: #333;
+      }
+
+      .score {
+        font-size: 24px;
+        font-weight: bold;
+        color: #007b5e;
+        margin-bottom: 10px;
+      }
+
+      #feedback {
+        font-size: 16px;
+        color: #444;
+        margin-bottom: 20px;
+      }
+
+      /* Button */
+      .button {
+        background: linear-gradient(to right, #0f9b0f, #00b09b);
+        border: none;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 30px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.2s ease;
+      }
+
+      .button:hover {
+        background: linear-gradient(to right, #00b09b, #0f9b0f);
+        transform: scale(1.05);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 480px) {
+        .result-container {
+          padding: 25px 15px;
+        }
+
+        .score {
+          font-size: 20px;
+        }
+
+        .button {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="result-container">
+      <h1>Your Quiz Result</h1>
+      <div class="score" id="score"></div>
+      <p id="feedback"></p>
+      <button class="button" onclick="window.location.href='index.html'">
+        Go Back
+      </button>
+    </div>
+
+    <script>
+      // Display score and feedback from localStorage
+      function displayResult() {
+        const score = localStorage.getItem("quizScore");
+        const totalQuestions = localStorage.getItem("totalQuestions");
+        const feedback = document.getElementById("feedback");
+
+        if (score !== null && totalQuestions !== null) {
+          document.getElementById(
+            "score"
+          ).innerText = `You scored ${score} out of ${totalQuestions}`;
+
+          const percentage = (score / totalQuestions) * 100;
+          if (percentage >= 80) {
+            feedback.innerText = "🌟 Excellent work! Keep it up!";
+          } else if (percentage >= 50) {
+            feedback.innerText = "👍 Good job! You can do even better!";
+          } else {
+            feedback.innerText = "💡 Don’t give up! Try again!";
+          }
+        } else {
+          document.getElementById("score").innerText = "No score available.";
+        }
+      }
+
+      window.onload = displayResult;
+    </script>
+  </body>
+</html>
