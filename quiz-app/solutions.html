@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Solutions Breakdown</title>
+    <link rel="stylesheet" href="result.css" />
+  </head>
+  <body>
+    <div class="result-container">
+      <h1><b>Correct Answers</b></h1>
+
+      <div id="result-breakdown"></div>
+
+      <button onclick="window.location.href='index.html'" class="next-button">
+        Go Back to Home
+      </button>
+    </div>
+
+    <script>
+      const breakdown = JSON.parse(localStorage.getItem("breakdown")) || [];
+      const breakdownContainer = document.getElementById("result-breakdown");
+
+      if (breakdown.length > 0) {
+        breakdown.forEach((q, idx) => {
+          const div = document.createElement("div");
+          div.className = "question-breakdown";
+
+          const qLabel = document.createElement("b");
+          qLabel.textContent = `Q${idx + 1}: `;
+
+          const qText = document.createTextNode(q.questionText);
+          const br = document.createElement("br");
+
+          div.appendChild(qLabel);
+          div.appendChild(qText);
+          div.appendChild(br);
+
+          if (q.correct) {
+            const correctSpan = document.createElement("span");
+            correctSpan.className = "correct-answer";
+            correctSpan.textContent = "✔ Correct";
+            div.appendChild(correctSpan);
+          } else {
+            const wrongSpan = document.createElement("span");
+            wrongSpan.className = "wrong-answer";
+            wrongSpan.textContent = "✘ Wrong";
+            div.appendChild(wrongSpan);
+            div.appendChild(document.createElement("br"));
+
+            const yourLabel = document.createElement("b");
+            yourLabel.textContent = "Your Answer: ";
+            const yourText = document.createTextNode(q.userAnswer || "Not Answered");
+
+            const correctLabel = document.createElement("b");
+            correctLabel.textContent = "Correct Answer: ";
+            const correctText = document.createTextNode(q.correctAnswer);
+
+            div.appendChild(yourLabel);
+            div.appendChild(yourText);
+            div.appendChild(document.createElement("br"));
+            div.appendChild(correctLabel);
+            div.appendChild(correctText);
+          }
+
+          breakdownContainer.appendChild(div);
+        });
+      } else {
+        breakdownContainer.textContent = "No solutions available.";
+      }
+    </script>
+  </body>
+</html>

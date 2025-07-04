@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foundation Quiz</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="config.js"></script>
+    <style>
+      .auth-buttons {
+        margin-left: auto;
+        display: flex;
+        gap: 10px;
+      }
+
+      .auth-buttons button {
+        padding: 8px 16px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .auth-buttons button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Landing Page -->
+    <section class="landing-page">
+      <div class="wrapper">
+        <div class="flex-content">
+          <h1 class="vacation-heading">Welcome To Foundation Quiz</h1>
+          <a href="#quiz-packages" class="btn">Start Now</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Header -->
+    <header class="quiz-header" id="quiz-header">
+      <h1 class="heading">Foundation Quiz</h1>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="main-nav" style="display: flex; align-items: center">
+      <a href="#">Home</a>
+      <a href="#quiz-packages">Quiz</a>
+      <div class="auth-buttons" id="auth-buttons">
+        <!-- Will be populated by JS -->
+      </div>
+    </nav>
+
+    <!-- Quiz Section -->
+    <section class="quiz-packages-section" id="quiz-packages">
+      <h1 class="quiz-heading">Coding Quiz</h1>
+      <p class="quiz-text">
+        Boost your coding skills with interactive quizzes in Java, Python,
+        JavaScript, and C Programming. Pick your language, test your knowledge,
+        and monitor your progress in real-time.
+      </p>
+      <div class="package-wrapper">
+        <div class="package-card">
+          <img src="./images/java.jpg" alt="Java Quiz" />
+          <p class="card-heading">Java</p>
+          <p class="card-text">Master Java programming concepts.</p>
+          <button class="btn" onclick="startQuiz('java')">Take Quiz</button>
+        </div>
+        <div class="package-card">
+          <img src="./images/python.jpg" alt="Python Quiz" />
+          <p class="card-heading">Python</p>
+          <p class="card-text">Learn Python easily.</p>
+          <button class="btn" onclick="startQuiz('python')">Take Quiz</button>
+        </div>
+        <div class="package-card">
+          <img src="./images/js.png" alt="JavaScript Quiz" />
+          <p class="card-heading">JavaScript</p>
+          <p class="card-text">Practice JavaScript skills.</p>
+          <button class="btn" onclick="startQuiz('javascript')">
+            Take Quiz
+          </button>
+        </div>
+        <div class="package-card">
+          <img src="./images/CProgramming.png" alt="C Quiz" />
+          <p class="card-heading">C Programming</p>
+          <p class="card-text">Learn C programming fundamentals.</p>
+          <button class="btn" onclick="startQuiz('c')">Take Quiz</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-section">
+      <small>All Rights Reserved<br /></small>
+      <small>Developed by Ansh Kumar</small>
+    </footer>
+
+    <script src="quiz.js"></script>
+    <script>
+      function startQuiz(quizType) {
+        const formattedQuizName =
+          quizType.charAt(0).toUpperCase() + quizType.slice(1) + " Quiz";
+        const confirmMessage = `Do you want to start the ${formattedQuizName}?`;
+
+        const userConfirmed = confirm(confirmMessage);
+
+        if (userConfirmed) {
+          window.location.href = `quiz.html?type=${quizType}`;
+        } else {
+          alert(`${formattedQuizName} start cancelled.`);
+        }
+      }
+
+      window.addEventListener("DOMContentLoaded", () => {
+        const authContainer = document.getElementById("auth-buttons");
+        const token = localStorage.getItem("accessToken");
+
+        if (token) {
+          authContainer.innerHTML = `
+             <button id="logout-btn">Logout</button>
+          `;
+          document
+            .getElementById("logout-btn")
+            .addEventListener("click", () => {
+              localStorage.removeItem("accessToken");
+              localStorage.removeItem("refreshToken");
+              localStorage.removeItem("expiresIn");
+              localStorage.removeItem("loginTime");
+              window.location.reload();
+            });
+        } else {
+          authContainer.innerHTML = `
+            <button onclick="window.location.href='login.html'">Login</button>
+            <button onclick="window.location.href='signup.html'">Signup</button>
+          `;
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Result</title>
+    <link rel="stylesheet" href="result.css" />
+  </head>
+  <body>
+    <div class="result-container">
+      <h1>Your Quiz Result</h1>
+
+      <div class="score" id="score"></div>
+      <p id="feedback"></p>
+
+      <div class="button-group">
+        <button onclick="window.location.href='index.html'" class="next-button">
+          Go Back to Home
+        </button>
+        <button
+          onclick="window.location.href='solutions.html'"
+          class="next-button"
+        >
+          View Correct Answers
+        </button>
+      </div>
+    </div>
+
+    <script>
+      const score = localStorage.getItem("quizScore");
+      const totalQuestions = localStorage.getItem("totalQuestions");
+
+      if (score !== null && totalQuestions !== null) {
+        document.getElementById(
+          "score"
+        ).innerText = `You scored ${score} out of ${totalQuestions}`;
+
+        const percentage = (score / totalQuestions) * 100;
+        const feedback = document.getElementById("feedback");
+
+        if (percentage >= 80) {
+          feedback.innerText = "🌟 Excellent! Keep it up!";
+        } else if (percentage >= 50) {
+          feedback.innerText = "👍 Good job! Try for a higher score.";
+        } else {
+          feedback.innerText = "💡 Don’t give up! Keep practicing.";
+        }
+      } else {
+        document.getElementById("score").innerText = "No score available.";
+      }
+    </script>
+  </body>
+</html>
