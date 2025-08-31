@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Quiz Application</title>
+    <link rel="stylesheet" href="quiz-style.css" />
+    <script defer src="quiz.js"></script>
+  </head>
+  <body>
+    <div class="quiz-main-container">
+      <div class="quiz-left-panel">
+        <header class="quiz-header">
+          <h1 id="quiz-title"><center>Coding Quiz</center></h1>
+        </header>
+
+        <div class="quiz-info">
+          <div>
+            Question <span id="current-question">0</span> of
+            <span id="total-questions">0</span>
+          </div>
+          <div class="timer-container">
+            Time Left: <span id="timer">15:00</span>
+          </div>
+        </div>
+
+        <div id="question-text" class="question">Loading question...</div>
+        <div id="options-container" class="options"></div>
+
+        <button id="next-button" class="next-button">Next Question</button>
+        <button id="submit-button" class="submit-button" onclick="submitQuiz()">
+          Submit Test
+        </button>
+      </div>
+
+      <div class="quiz-right-panel">
+        <div id="question-nav" class="question-nav"></div>
+        <button id="logout-button" class="logout-button" onclick="logoutUser()">
+          Logout
+        </button>
+      </div>
+    </div>
+
+    <script>
+      // === Token Check ===
+      const accessToken = localStorage.getItem("accessToken");
+      const loginTime = parseInt(localStorage.getItem("loginTime") || "0");
+      const expiresIn = parseInt(localStorage.getItem("expiresIn") || "0");
+
+      // Token expired?
+      const isExpired = Date.now() > loginTime + expiresIn * 1000;
+
+      if (!accessToken || isExpired) {
+        alert("Session expired or not logged in. Please login again.");
+        localStorage.clear();
+        window.location.href = "login.html";
+      }
+
+      // === Logout ===
+      function logoutUser() {
+        localStorage.clear();
+        alert("Logged out successfully!");
+        window.location.href = "index.html";
+      }
+
+      // Example function for fetching questions (quiz.js should use this)
+      async function fetchQuestions(quizType) {
+        try {
+          const res = await fetch(
+            `http://localhost:8080/api/quiz/${quizType}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          );
+
+          if (res.status === 401) {
+            alert("Session expired. Please login again.");
+            logoutUser();
+            return;
+          }
+
+          const questions = await res.json();
+          console.log("Loaded questions:", questions);
+        } catch (err) {
+          console.error(err);
+          alert("Failed to load quiz.");
+        }
+      }
+    </script>
+  </body>
+</html>

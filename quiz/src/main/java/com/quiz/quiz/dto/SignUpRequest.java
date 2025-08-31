@@ -1,10 +1,12 @@
 package com.quiz.quiz.dto;
 
-public class LoginRequest {
+import lombok.Data;
 
+@Data
+public class SignUpRequest {
     private String username;
-    private String password;
 
+    private String password;
 
     public String getUsername() {
         return username;
@@ -21,4 +23,7 @@ public class LoginRequest {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
+
 }

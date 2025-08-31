@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        color: #fff;
+      }
+
+      .login-container {
+        background: rgba(20, 20, 20, 0.95);
+        padding: 2.5rem;
+        border-radius: 14px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+        width: 360px;
+        text-align: center;
+        animation: fadeIn 0.5s ease-in-out;
+        position: relative;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      h2 {
+        margin-bottom: 1rem;
+        font-size: 2rem;
+        color: #00d4ff;
+      }
+
+      .icon {
+        font-size: 40px;
+        margin-bottom: 1rem;
+        color: #00d4ff;
+      }
+
+      input {
+        width: 90%;
+        padding: 12px;
+        margin: 12px 0;
+        border: 1px solid #555;
+        border-radius: 8px;
+        background: #1e1e1e;
+        color: #fff;
+        font-size: 15px;
+        transition: border 0.3s, background 0.3s;
+      }
+
+      input:focus {
+        border: 1px solid #00d4ff;
+        background: #2a2a2a;
+        outline: none;
+      }
+
+      button {
+        width: 95%;
+        padding: 12px;
+        margin-top: 1rem;
+        background: linear-gradient(90deg, #007bff, #00d4ff);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background 0.3s, transform 0.2s;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        background: linear-gradient(90deg, #0056b3, #00a6d6);
+      }
+
+      .extra-links {
+        margin-top: 1.2rem;
+        font-size: 14px;
+        color: #ccc;
+      }
+
+      a {
+        color: #00d4ff;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+
+      a:hover {
+        color: #00a6d6;
+        text-decoration: underline;
+      }
+
+      .footer {
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        right: 0;
+        font-size: 12px;
+        color: #888;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <div class="icon">🔒</div>
+      <h2>Welcome Back</h2>
+      <form id="loginForm">
+        <input
+          type="text"
+          id="username"
+          placeholder="Username"
+          required
+        /><br />
+        <input
+          type="password"
+          id="password"
+          placeholder="Password"
+          required
+        /><br />
+        <button type="submit">Login</button>
+      </form>
+      <div class="extra-links">
+        <p><a href="#">Forgot password?</a></p>
+        <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+      </div>
+      <div class="footer">&copy; 2025 QuizApp. All rights reserved.</div>
+    </div>
+
+    <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const username = document.getElementById("username").value.trim();
+          const password = document.getElementById("password").value.trim();
+
+          try {
+            const res = await fetch("http://localhost:8080/api/auth/login", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ username, password }),
+            });
+
+            if (!res.ok) {
+              alert("Login failed! Please check your credentials.");
+              return;
+            }
+
+            const data = await res.json();
+            localStorage.setItem("accessToken", data.accessToken);
+            localStorage.setItem("refreshToken", data.refreshToken);
+            localStorage.setItem("expiresIn", data.expiresIn);
+            localStorage.setItem("loginTime", Date.now());
+
+            window.location.href = "index.html";
+          } catch (err) {
+            console.error(err);
+            alert("An error occurred while logging in.");
+          }
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Solutions Breakdown</title>
+    <link rel="stylesheet" href="result.css" />
+  </head>
+  <body>
+    <div class="result-container">
+      <h1><b>Correct Answers</b></h1>
+
+      <div id="result-breakdown"></div>
+
+      <button onclick="window.location.href='index.html'" class="next-button">
+        Go Back to Home
+      </button>
+    </div>
+
+    <script>
+      const breakdown = JSON.parse(localStorage.getItem("breakdown")) || [];
+      const breakdownContainer = document.getElementById("result-breakdown");
+
+      if (breakdown.length > 0) {
+        breakdown.forEach((q, idx) => {
+          const div = document.createElement("div");
+          div.className = "question-breakdown";
+
+          let content = `<b>Q${idx + 1}:</b> ${q.questionText}<br>`;
+
+          if (q.isCorrect) {
+            content += `<span class="correct-answer">✔ Correct</span>`;
+          } else {
+            content += `<span class="wrong-answer">✘ Wrong</span><br>`;
+            content += `<b>Your Answer:</b> ${q.userAnswer}<br>`;
+            content += `<b>Correct Answer:</b> ${q.correctAnswer}<br>`;
+          }
+
+          div.innerHTML = content;
+          breakdownContainer.appendChild(div);
+        });
+      } else {
+        breakdownContainer.innerText = "No solutions available.";
+      }
+    </script>
+  </body>
+</html>
